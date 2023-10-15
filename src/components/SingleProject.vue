@@ -4,7 +4,9 @@
       <h3 @click="showdetail = !showdetail">{{ project.title }}</h3>
       <div class="icons">
         <span class="material-symbols-outlined"> edit </span>
-        <span class="material-symbols-outlined"> delete </span>
+        <span @click="deleteProject" class="material-symbols-outlined">
+          delete
+        </span>
         <span class="material-symbols-outlined"> done </span>
       </div>
     </div>
@@ -19,9 +21,21 @@ export default {
   data() {
     return {
       showdetail: false,
+      url: "http://localhost:3000/projects/" + this.project.id,
     };
   },
   props: ["project"],
+  methods: {
+    deleteProject() {
+      fetch(this.url, { method: "DELETE" })
+        .then(() => {
+          this.$emit("delete", this.project.id);
+        })
+        .catch((err) => {
+          console.log(err.message)
+        });
+    },
+  },
 };
 </script>
 
@@ -45,7 +59,7 @@ h3 {
 .material-symbols-outlined {
   font-size: 24px;
   margin-left: 10px;
-  color: rgb(52, 52, 52);
+  color: rgb(71, 71, 71);
 
   /* color: #b4b1b1; */
   cursor: pointer;
