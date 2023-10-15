@@ -23,7 +23,7 @@ export default {
       <SingleProject :project="project" />
     </div>
   </main>
-</template>
+</template> 
 <style>
 .main {
   max-width: 700px;
