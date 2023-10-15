@@ -1,14 +1,17 @@
-<script setup>
+<script >
 import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
+
+
 </script>
 
 <template>
-  <div>home</div>
+  <header>
+    <div>home </div>
+  </header>
+
 
   <RouterView />
 </template>
 
 <style >
-
 </style>
