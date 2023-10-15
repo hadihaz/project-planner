@@ -1,5 +1,5 @@
 <template>
-  <div class="project">
+  <div class="project" :class="{ complete: project.complete }">
     <div class="action">
       <h3 @click="showdetail = !showdetail">{{ project.title }}</h3>
       <div class="icons">
@@ -7,7 +7,9 @@
         <span @click="deleteProject" class="material-symbols-outlined">
           delete
         </span>
-        <span class="material-symbols-outlined"> done </span>
+        <span @click="changeComplete" class="material-symbols-outlined">
+          done
+        </span>
       </div>
     </div>
     <div v-if="showdetail" class="details">
@@ -21,18 +23,31 @@ export default {
   data() {
     return {
       showdetail: false,
-      url: "http://localhost:3000/projects/" + this.project.id,
+      uri: "http://localhost:3000/projects/" + this.project.id,
     };
   },
   props: ["project"],
   methods: {
     deleteProject() {
-      fetch(this.url, { method: "DELETE" })
+      fetch(this.uri, { method: "DELETE" })
         .then(() => {
           this.$emit("delete", this.project.id);
         })
         .catch((err) => {
-          console.log(err.message)
+          console.log(err.message);
+        });
+    },
+    changeComplete() {
+      fetch(this.uri, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ complete: !this.project.complete }),
+      })
+        .then(() => {
+          this.$emit("complete", this.project.id);
+        })
+        .catch((err) => {
+          console.log(err.message);
         });
     },
   },
@@ -66,5 +81,8 @@ h3 {
 }
 .material-symbols-outlined:hover {
   color: black;
+}
+.complete {
+  border-left: 4px solid #00ce89;
 }
 </style>

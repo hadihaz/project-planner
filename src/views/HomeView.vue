@@ -19,6 +19,12 @@ export default {
         return item.id !== id;
       });
     },
+    handleComplete(id) {
+      let project = this.projects.find((item) => {
+        return item.id === id;
+      });
+      project.complete = !project.complete;
+    },
   },
 };
 </script>
@@ -27,7 +33,11 @@ export default {
   <main class="main">
     <div v-for="project in projects" :key="project.id">
       <!-- <p>{{ project.title }}</p> -->
-      <SingleProject :project="project" @delete="handleDelete" />
+      <SingleProject
+        :project="project"
+        @delete="handleDelete"
+        @complete="handleComplete"
+      />
     </div>
   </main>
 </template> 
