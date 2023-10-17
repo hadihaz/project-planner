@@ -1,17 +1,21 @@
 <script >
 import { RouterLink, RouterView } from "vue-router";
-
-
+import Navbar from "./components/Navbar.vue";
+export default {
+  components: {
+    Navbar,
+  },
+};
 </script>
 
 <template>
   <header>
-    <div>home </div>
+    <Navbar />
   </header>
-
 
   <RouterView />
 </template>
 
 <style >
+
 </style>
