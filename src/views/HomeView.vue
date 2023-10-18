@@ -1,10 +1,12 @@
 <script >
 import SingleProject from "../components/SingleProject.vue";
+import filterNav from "../components/FilterNav.vue";
 export default {
-  components: { SingleProject },
+  components: { SingleProject, filterNav },
   data() {
     return {
       projects: [],
+      current: "all",
     };
   },
   mounted() {
@@ -26,12 +28,24 @@ export default {
       project.complete = !project.complete;
     },
   },
+  computed: {
+    filteredProjects() {
+      if (this.current === "complated") {
+        return this.projects.filter((item) => item.complete);
+      } else if (this.current === "ongoing") {
+        return this.projects.filter((item) => !item.complete);
+      } else {
+        return this.projects;
+      }
+    },
+  },
 };
 </script>
 
 <template>
   <main class="main">
-    <div v-for="project in projects" :key="project.id">
+    <filterNav @filterChange="current = $event" :current="current" />
+    <div v-for="project in filteredProjects" :key="project.id">
       <!-- <p>{{ project.title }}</p> -->
       <SingleProject
         :project="project"
